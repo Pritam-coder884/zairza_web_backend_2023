@@ -1,4 +1,7 @@
-
+## Routes
+Signup : https://web-backend-3bsv.onrender.com/create/user
+Login: https://web-backend-3bsv.onrender.com/login/user
+getUsers: https://web-backend-3bsv.onrender.com/get/user
 
 ## copying the .env.example file to .env file
 
