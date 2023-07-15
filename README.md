@@ -5,6 +5,10 @@ Login: https://web-backend-3bsv.onrender.com/login/user
 
 getUsers: https://web-backend-3bsv.onrender.com/get/user
 
+google signin : https://web-backend-3bsv.onrender.com/auth/google
+
+github signin : https://web-backend-3bsv.onrender.com/auth/github
+
 ## copying the .env.example file to .env file
 
 cp .env.example .env
