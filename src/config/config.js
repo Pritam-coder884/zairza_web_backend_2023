@@ -16,7 +16,7 @@ dotenv.config({path:path.join(__dirname,"../../.env")});
 
 const envVarsSchema=joi.object().keys({
     NODE_ENV:joi.string().valid("production","development","test").required(),
-    PORT:joi.number().default(5000),
+    PORT:joi.number().default(2000),
     MONGODB_URL:joi.string().required().description("Mongodb URL"),
 
 }).unknown();

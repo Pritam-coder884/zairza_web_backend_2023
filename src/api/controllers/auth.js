@@ -5,14 +5,6 @@ const loginFailed = async(req,res) => {
     })
 }
 
-const loginSuccess = async(req,res) => {
-    // console.log("req.user in login Success : ",req.user);
-    res.status(200).json({
-        success : true,
-        user : req.user
-    })    
-}
-
 const logout = async (req,res) => {
     req.logout(function(err) {
         if (err) {
@@ -24,6 +16,5 @@ const logout = async (req,res) => {
 
 module.exports = {
     loginFailed,
-    loginSuccess,
     logout
 }

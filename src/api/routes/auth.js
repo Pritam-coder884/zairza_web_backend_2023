@@ -6,9 +6,6 @@ const {authentication} = require('../middlewares')
 
 route.get('/auth/login/failed', AuthController.loginFailed)
 
-//use this route to fetch user details after passport authentication
-route.get('/auth/login/success', authentication.authenticationGoogleandGithub, AuthController.loginSuccess)
-
 route.get('/auth/logout', AuthController.logout)
 
 

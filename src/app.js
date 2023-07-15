@@ -26,6 +26,11 @@ if(config.env !== "test"){
 // parsing json data
 app.use(express.json());
 
+// enable cors
+app.use(cors({
+	origin : process.env.CLIENT_URL,
+	credentials : true,
+}));
 
 app.use(session({
 	secret : "zairza",
@@ -43,8 +48,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(xss());
 app.use(mongoSanitize());
 
-// enable cors
-app.use(cors());
 
 app.use("/",userRoute);
 app.use("/",authRoute);
