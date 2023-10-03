@@ -5,27 +5,40 @@ const jwt = require('jsonwebtoken')
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 
-const createUser = (req, res) => {
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
-  });
+const createUser = async (req, res, next) => {
+ try{
+  const {
+    email,
+    name,
+    password,
+    phone,
+    isZairzaMember,
+    yearOfPassout
+  } = req.body;
 
-  user.save((err, user) => {
-    if (err) {
-      res.status(500)
-        .send({
-          message: err
-        });
-      return;
-    } else {
-      res.status(200)
-        .send({
-          message: "User Registered successfully"
-        })
-    }
-  });
+
+
+  //password hashing
+  const salt = bcrypt.genSaltSync(10);
+  const bcrypt_password = bcrypt.hashSync(password, salt);
+
+  const newUser=new User({
+    email,
+    name,
+    password : bcrypt_password,
+    phone,
+    isZairzaMember,
+    yearOfPassout
+  })
+  const userEmail=newUser.email;
+  const createUser = await newUser.save();
+  res.status(200).send(createUser);
+  // sendingEmail({userEmail});
+
+ }catch(error){
+  res.status(500).send(error.message);
+  // next(error);
+ }
 
 };
 
@@ -42,10 +55,6 @@ const getAllUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body
-
-    if (!email || !password) {
-      throw new BadRequestError('Please provide email and password')
-    }
   
     const oldUser = await User.findOne({ email })
     if (!oldUser) {
@@ -53,7 +62,7 @@ const loginUser = async (req, res, next) => {
     }
    
     if (await bcrypt.compare(password, oldUser.password)) {
-      const token = jwt.sign({email: oldUser.email, name: oldUser.name,phone: oldUser.phone,isZairzaMember:oldUser.isZairzaMember}, `${process.env.JWT_SECRET_KEY}`)
+      const token = jwt.sign({email: oldUser.email, name: oldUser.username,phone: oldUser.phone,isZairzaMember:oldUser.isZairzaMember}, `${process.env.JWT_SECRET_KEY}`)
   
       if (res.status(201)) {
         return res.status(201).send({token :  token })
