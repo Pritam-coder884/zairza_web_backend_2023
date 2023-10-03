@@ -62,7 +62,7 @@ const loginUser = async (req, res, next) => {
     }
    
     if (await bcrypt.compare(password, oldUser.password)) {
-      const token = jwt.sign({email: oldUser.email, name: oldUser.username,phone: oldUser.phone,isZairzaMember:oldUser.isZairzaMember}, `${process.env.JWT_SECRET_KEY}`)
+      const token = jwt.sign({email: oldUser.email, name: oldUser.name}, `${process.env.JWT_SECRET_KEY}`)
   
       if (res.status(201)) {
         return res.status(201).send({token :  token })
