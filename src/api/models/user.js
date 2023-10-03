@@ -1,19 +1,28 @@
 const mongoose=require("mongoose");
 const UserSchema=new mongoose.Schema({
-    email:{
-        type:String,
-        required:true,
-        unique:true,
-    },
     name:{
         type:String,
         required:true,
         min:2,
         max:50
     },
+    email: {
+        type: String,
+        unique: [true, "email already exists in database!"],
+        lowercase: true,
+        trim: true,
+        required: [true, "email not provided"],
+        validate: {
+          validator: function (v) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+          },
+          message: '{VALUE} is not a valid email!'
+        }
+    
+    },
     password:{
         type:String,
-        min:5,
+        required:true,
     },
     phone:{
         type:Number,

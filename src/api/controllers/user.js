@@ -5,43 +5,27 @@ const jwt = require('jsonwebtoken')
 const { StatusCodes } = require('http-status-codes');
 const { BadRequestError, UnauthenticatedError } = require('../errors');
 
-const createUser = async (req, res, next) => {
- try{
-  const {
-    email,
-    name,
-    password,
-    phone,
-    isZairzaMember,
-    yearOfPassout
-  } = req.body;
+const createUser = (req, res) => {
+  const user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8)
+  });
 
-  if(!email || !name || !password ){
-    throw new BadRequestError('Please provide all the details');
-  }
- 
-
-  //password hashing
-  const salt = bcrypt.genSaltSync(10);
-  const bcrypt_password = bcrypt.hashSync(password, salt);
-
-  const newUser=new User({
-    email,
-    name,
-    password : bcrypt_password,
-    phone,
-    isZairzaMember,
-    yearOfPassout
-  })
-  const userEmail=newUser.email;
-  const createUser = await newUser.save();
-  res.status(200).send(createUser);
-  // sendingEmail({userEmail});
-
- }catch(error){
-  res.status(500).send(error.message);
-  // next(error);
- }
+  user.save((err, user) => {
+    if (err) {
+      res.status(500)
+        .send({
+          message: err
+        });
+      return;
+    } else {
+      res.status(200)
+        .send({
+          message: "User Registered successfully"
+        })
+    }
+  });
 
 };
 
