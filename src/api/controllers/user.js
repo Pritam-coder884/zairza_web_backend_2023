@@ -9,14 +9,14 @@ const createUser = async (req, res, next) => {
  try{
   const {
     email,
-    username,
+    name,
     password,
     phone,
     isZairzaMember,
     yearOfPassout
   } = req.body;
 
-  if(!email || !username || !password || !phone || !isZairzaMember || !yearOfPassout){
+  if(!email || !name || !password ){
     throw new BadRequestError('Please provide all the details');
   }
  
