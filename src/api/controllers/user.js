@@ -58,7 +58,7 @@ const loginUser = async (req, res, next) => {
   
     const oldUser = await User.findOne({ email })
     if (!oldUser) {
-      throw new UnauthenticatedError('Invalid Credentials')
+      throw new UnauthenticatedError('Mail Id is not Registered');
     }
    
     if (await bcrypt.compare(password, oldUser.password)) {
