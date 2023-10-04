@@ -71,7 +71,7 @@ const loginUser = async (req, res, next) => {
         throw new UnauthenticatedError('Invalid Credentials')
       }
     }
-    res.status(401).send({message : "Invalid Password"});
+    res.status(401).send({message : "Wrong Password"});
   } catch (error) {
     // res.status(500).send(error.message);
     next(error);
