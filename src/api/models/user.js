@@ -45,24 +45,17 @@ const UserSchema = new mongoose.Schema({
     versionKey: false
 });
 
-UserSchema.statics.generateZencode = async () => {
+UserSchema.statics.generateZencode = async (num) => {
     let NewZenCode;
-    let lastZenCode = await Zencode.findOne();
 
-    if (!lastZenCode) {
-        lastZenCode = new Zencode({ num: 0 });
-    }
-    lastZenCode.num = lastZenCode.num + 1;
-
-    if (lastZenCode.num < 10) {
-        NewZenCode = `Z202300${lastZenCode.num}`;
-    } else if (lastZenCode.num < 100) {
-        NewZenCode = `Z20230${lastZenCode.num}`;
+    if (num < 10) {
+        NewZenCode = `Z202300${num}`;
+    } else if (num < 100) {
+        NewZenCode = `Z20230${num}`;
     } else {
-        NewZenCode = `Z2023${lastZenCode.num}`;
+        NewZenCode = `Z2023${num}`;
     }
 
-    await lastZenCode.save()
     return NewZenCode
 }
 

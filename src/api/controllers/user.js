@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { User } = require("../models");
+const { User , Zencode} = require("../models");
 // const {sendingEmail }= require('../services/nodemailer');
 const {UnauthenticatedError } = require('../errors');
 const config = require('../../config/config')
@@ -18,7 +18,14 @@ const createUser = async (req, res, next) => {
   const salt = bcrypt.genSaltSync(10);
   const bcrypt_password = bcrypt.hashSync(password, salt);
 
-  const NewZenCode = await User.generateZencode()
+  let lastZenCode = await Zencode.findOne();
+
+  if (!lastZenCode) {
+      lastZenCode = new Zencode({ num: 0 });
+  }
+  lastZenCode.num = lastZenCode.num + 1;
+
+  const NewZenCode = await User.generateZencode(lastZenCode.num)
 
   const newUser=new User({
     name,
@@ -29,6 +36,7 @@ const createUser = async (req, res, next) => {
   })
 
   await newUser.save();
+  await lastZenCode.save()
   res.status(201).send(newUser);
  }catch(error){
     next(error)
