@@ -1,4 +1,5 @@
-const userRoute=require("./user.js");
+
+const userRoute=require("./user.js")
 module.exports={
     userRoute,
 }
