@@ -1,14 +1,15 @@
-const mongoose=require("mongoose");
-const zenCodeSchema=new mongoose.Schema({
-    num:{
-        type:Number,
-        default:0,
+const mongoose=require("mongoose")
+
+const ZencodeSchema=new mongoose.Schema({
+    num : {
+        type : Number,
+        default : 0
     }
-},
-{
+},{
+    strict : true,
     timestamps:true,
     versionKey:false
-}
+});
 
-);
-module.exports = mongoose.model("Zencode",zenCodeSchema);
+const Zencode = mongoose.model("Zencode",ZencodeSchema);
+module.exports = Zencode

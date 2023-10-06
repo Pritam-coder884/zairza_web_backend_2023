@@ -1,5 +1,7 @@
+const userRoute = require('./user.js')
+const eventRoute = require('./event.js')
 
-const userRoute=require("./user.js")
 module.exports={
     userRoute,
+    eventRoute
 }

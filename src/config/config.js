@@ -34,7 +34,8 @@ module.exports={
     port:envVars.PORT,
     mongoose:{
         url:envVars.MONGODB_URL+(envVars.NODE_ENV==="test" ? "-test":""),
-    }
+    },
+    jwt_secret : envVars.JWT_SECRET,
 }
 
 

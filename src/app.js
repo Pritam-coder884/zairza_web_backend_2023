@@ -8,7 +8,7 @@ const config = require("./config/config");
 const morgan = require("./config/morgan");
 
 
-const {userRoute}=require("./api/routes");
+const {userRoute,eventRoute}=require("./api/routes");
 const {notFound,errorHandlerMiddleware}=require("./api/middlewares");
 
 const app=express();
@@ -32,7 +32,7 @@ app.use(mongoSanitize());
 app.use(cors());
 
 app.use("/",userRoute);
-
+app.use("/",eventRoute)
 
 // Welcome route to zairza website
 app.get("/", async (req, res, next) => {
