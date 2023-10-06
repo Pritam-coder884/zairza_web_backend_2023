@@ -8,7 +8,6 @@ const config = require("./config/config");
 const morgan = require("./config/morgan");
 
 
-// use of session and passport.js
 const {userRoute}=require("./api/routes");
 const {notFound,errorHandlerMiddleware}=require("./api/middlewares");
 
