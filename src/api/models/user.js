@@ -29,19 +29,8 @@ const UserSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    phone:{
-        type:Number,
-    },
-    yearOfPassout:{
-        type:Number,
-    },
-    isZairzaMember:{
-        type:Boolean,
-        default :false
-    },
     zenCode:{
         type:String,
-        required:true,
         unique:true,
     }
     

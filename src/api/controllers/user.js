@@ -13,12 +13,7 @@ const createUser = async (req, res, next) => {
     regdno,
     email,
     password,
-    phone,
-    isZairzaMember,
-    yearOfPassout
   } = req.body;
-
-
 
   //password hashing
   const salt = bcrypt.genSaltSync(10);
@@ -31,25 +26,15 @@ const createUser = async (req, res, next) => {
   }
 
   lastZenCode.num=lastZenCode.num+1;
+  
+  let NewZenCode;
 
-  let tempVal=lastZenCode.num;
-
-  let digit=0;
-
-  while(tempVal>0){
-     tempVal=tempVal/10;
-     digit++;
-    //  tempVal=tempVal%10;
-  }
-
-  let NewZenCode
-
-  if(digit==1){
-    NewZenCode="Z202300"+toString(lastZenCode);
-  }else if(digit==2){
-    NewZenCode="Z20230"+toString(lastZenCode);
-  }else if(digit==3){
-    NewZenCode="Z2023"+toString(lastZenCode);
+  if(lastZenCode.num<10){
+    NewZenCode=`Z202300${lastZenCode.num}`;
+  }else if(lastZenCode.num<100){
+    NewZenCode=`Z20230${lastZenCode.num}`;
+  }else if(lastZenCode.num<1000){
+    NewZenCode=`Z2023${lastZenCode.num}`;
   }
 
   const newUser=new User({
@@ -57,20 +42,15 @@ const createUser = async (req, res, next) => {
     regdno,
     email,
     password : bcrypt_password,
-    phone,
-    isZairzaMember,
-    yearOfPassout,
-    zenCode:NewZenCode,
+    zenCode : NewZenCode,
   })
-  const userEmail=newUser.email;
-  const createUser = await newUser.save();
-  await lastZenCode.save();
-  res.status(200).send(createUser);
-  // sendingEmail({userEmail});
 
+  await newUser.save();
+  await lastZenCode.save();
+
+  res.status(200).send(newUser);
  }catch(error){
-  res.status(500).send(error.message);
-  // next(error);
+    res.status(500).send(error.message);
  }
 
 };
