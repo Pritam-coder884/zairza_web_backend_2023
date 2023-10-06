@@ -3,11 +3,15 @@ Signup : https://web-backend-3bsv.onrender.com/create/user
 
 Login: https://web-backend-3bsv.onrender.com/login/user
 
-getUsers: https://web-backend-3bsv.onrender.com/get/user
+getUsers: https://web-backend-3bsv.onrender.com/getall/user
 
-google signin : https://web-backend-3bsv.onrender.com/auth/google
+getUser:  https://web-backend-3bsv.onrender.com/get/user
 
-github signin : https://web-backend-3bsv.onrender.com/auth/github
+createEvent : https://web-backend-3bsv.onrender.com/create/event
+
+getEvents : https://web-backend-3bsv.onrender.com/getall/event
+
+enrollEvent : https://web-backend-3bsv.onrender.com/enroll/event
 
 ## copying the .env.example file to .env file
 
