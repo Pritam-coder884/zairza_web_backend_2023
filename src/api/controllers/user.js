@@ -8,8 +8,9 @@ const { BadRequestError, UnauthenticatedError } = require('../errors');
 const createUser = async (req, res, next) => {
  try{
   const {
-    email,
     name,
+    regdno,
+    email,
     password,
     phone,
     isZairzaMember,
@@ -23,8 +24,9 @@ const createUser = async (req, res, next) => {
   const bcrypt_password = bcrypt.hashSync(password, salt);
 
   const newUser=new User({
-    email,
     name,
+    regdno,
+    email,
     password : bcrypt_password,
     phone,
     isZairzaMember,

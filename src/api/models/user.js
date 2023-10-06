@@ -6,6 +6,11 @@ const UserSchema=new mongoose.Schema({
         min:2,
         max:50
     },
+    regdno:{
+        type:Number,
+        unique:true,
+        required:true,
+    },
     email: {
         type: String,
         unique: [true, "email already exists in database!"],
