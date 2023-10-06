@@ -9,11 +9,7 @@ const morgan = require("./config/morgan");
 
 
 // use of session and passport.js
-
-const session = require('express-session');
-const passport = require('passport');
-require('./api/helpers/passport')
-const {userRoute, authRoute}=require("./api/routes");
+const {userRoute}=require("./api/routes");
 const {notFound,errorHandlerMiddleware}=require("./api/middlewares");
 
 const app=express();
@@ -26,16 +22,6 @@ if(config.env !== "test"){
 // parsing json data
 app.use(express.json());
 
-
-app.use(session({
-	secret : "zairza",
-	// resave : true,
-	// saveUninitialized : true,
-	// cookie : {secure : false}
-  }))
-app.use(passport.initialize())
-app.use(passport.session())
-
 // parsing urlencoded data
 app.use(express.urlencoded({ extended: true }));
 
@@ -47,7 +33,6 @@ app.use(mongoSanitize());
 app.use(cors());
 
 app.use("/",userRoute);
-app.use("/",authRoute);
 
 
 // Welcome route to zairza website
