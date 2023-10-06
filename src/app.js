@@ -13,7 +13,7 @@ const morgan = require("./config/morgan");
 const session = require('express-session');
 const passport = require('passport');
 require('./api/helpers/passport')
-const {userRoute, authRoute}=require("./api/routes");
+const {userRoute}=require("./api/routes");
 const {notFound,errorHandlerMiddleware}=require("./api/middlewares");
 
 const app=express();
@@ -47,7 +47,6 @@ app.use(mongoSanitize());
 app.use(cors());
 
 app.use("/",userRoute);
-app.use("/",authRoute);
 
 
 // Welcome route to zairza website
