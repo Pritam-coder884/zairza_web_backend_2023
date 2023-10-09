@@ -7,12 +7,19 @@ const eventSchema = new mongoose.Schema({
         unique : true
     },
     event_description : {
-        type : String,
-        required : true,
+        type : String
     },
     total_enrolls : {
         type : Number,
         default : 0
+    },
+    event_date : {
+        type : String,
+        required : true
+    },
+    event_venue : {
+        type : String,
+        required : true
     }
 },{
     strict : true,
