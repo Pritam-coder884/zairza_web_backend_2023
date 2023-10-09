@@ -4,11 +4,12 @@ const { BadRequestError } = require('../errors')
 
 const createEvent = async (req,res,next) => {
     try {
-        const {event_id, event_name, event_description} = req.body
+        const {event_name, event_description, event_date, event_venue} = req.body
         const event = new Event({
-            event_id,
             event_name,
-            event_description
+            event_description,
+            event_date,
+            event_venue
         })
         await event.save()
         res.status(200).send({event})
