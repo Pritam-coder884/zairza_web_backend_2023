@@ -47,7 +47,7 @@ const enrollEvent = async (req,res,next) => {
         })
 
         if(findId){
-            res.status(200).send({msg : 'You have already enrolled here'})
+            return res.status(400).send({msg : 'You have already enrolled here'})
         }
         else{
             event.total_enrolls = event.total_enrolls + 1;
