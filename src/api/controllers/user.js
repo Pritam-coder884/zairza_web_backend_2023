@@ -9,6 +9,7 @@ const path = require('path')
 
 const createUser = async (req, res, next) => {
  try{
+  console.log(req.files);
   const {
     name,
     regdno,
@@ -42,6 +43,7 @@ const createUser = async (req, res, next) => {
   await lastZenCode.save()
   res.status(201).send(newUser);
  }catch(error){
+    console.log(error)
     next(error)
   }
 }
