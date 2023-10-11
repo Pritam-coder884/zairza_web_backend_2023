@@ -22,7 +22,7 @@ if(config.env !== "test"){
 app.use(express.json());
 
 // parsing urlencoded data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 // sanitize request data
 app.use(xss());

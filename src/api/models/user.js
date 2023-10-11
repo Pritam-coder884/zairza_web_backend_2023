@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Zencode = require("./zencode")
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -38,7 +37,11 @@ const UserSchema = new mongoose.Schema({
     events : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Event'
-    }]
+    }],
+    image_path : {
+        type : String,
+        required : true
+    }
 },{
     strict: true,
     timestamps: true,

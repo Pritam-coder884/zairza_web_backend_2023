@@ -1,9 +1,11 @@
+const { readFile } = require('node:fs/promises')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User , Zencode} = require("../models");
 // const {sendingEmail }= require('../services/nodemailer');
 const {UnauthenticatedError } = require('../errors');
 const config = require('../../config/config')
+const path = require('path')
 
 const createUser = async (req, res, next) => {
  try{
@@ -33,6 +35,7 @@ const createUser = async (req, res, next) => {
     email,
     password : bcrypt_password,
     zencode : NewZenCode,
+    image_path : req.files[0]?.path.split('\\')[2]
   })
 
   await newUser.save();
@@ -40,8 +43,25 @@ const createUser = async (req, res, next) => {
   res.status(201).send(newUser);
  }catch(error){
     next(error)
- }
-};
+  }
+}
+
+const getUserImage = async(req,res,next) => {
+  try {
+    const user = await User.findOne({email : req.body.email})
+
+    if(!user){
+      return res.status(404).send('Not found')
+    }
+
+    const location = path.join(__dirname,`..\\..\\..\\public\\images\\`, user.image_path)
+    const file = await readFile(location)
+    res.contentType('image/jpeg')
+    res.send(file);
+  } catch (error) {
+    next(error)
+  }
+}
 
 const getAllUser = async (req, res, next) => {
   try {
@@ -91,7 +111,8 @@ module.exports = {
   createUser,
   getAllUser,
   loginUser,
-  getUser
+  getUser,
+  getUserImage
 };
 
 
