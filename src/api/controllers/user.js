@@ -9,13 +9,23 @@ const path = require('path')
 
 const createUser = async (req, res, next) => {
  try{
-  console.log(req.files);
+  // console.log(req.files);
   const {
     name,
     regdno,
     email,
     password,
   } = req.body;
+
+  const existinguser = await User.findOne({email});
+  if(existinguser){
+    return res.status(404).send({msg: "User already exists"});
+  }
+
+  const ereg = await User.findOne({regdno});
+  if(ereg){
+    return res.status(404).send({msg: "User already exists"})
+  }
 
   //password hashing
   const salt = bcrypt.genSaltSync(10);
@@ -36,7 +46,7 @@ const createUser = async (req, res, next) => {
     email,
     password : bcrypt_password,
     zencode : NewZenCode,
-    image_path : req.files[0]?.path.split('\\')[2]
+    // image_path : req.files[0]?.path.split('\\')[2]
   })
 
   await newUser.save();
@@ -48,22 +58,22 @@ const createUser = async (req, res, next) => {
   }
 }
 
-const getUserImage = async(req,res,next) => {
-  try {
-    const user = await User.findOne({email : req.body.email})
+// const getUserImage = async(req,res,next) => {
+//   try {
+//     const user = await User.findOne({email : req.body.email})
 
-    if(!user){
-      return res.status(404).send('Not found')
-    }
+//     if(!user){
+//       return res.status(404).send('Not found')
+//     }
 
-    const location = path.join(__dirname,`..\\..\\..\\public\\images\\`, user.image_path)
-    const file = await readFile(location)
-    res.contentType('image/jpeg')
-    res.send(file);
-  } catch (error) {
-    next(error)
-  }
-}
+//     const location = path.join(__dirname,`..\\..\\..\\public\\images\\`, user.image_path)
+//     const file = await readFile(location)
+//     res.contentType('image/jpeg')
+//     res.send(file);
+//   } catch (error) {
+//     next(error)
+//   }
+// }
 
 const getAllUser = async (req, res, next) => {
   try {
@@ -113,8 +123,7 @@ module.exports = {
   createUser,
   getAllUser,
   loginUser,
-  getUser,
-  getUserImage
+  getUser
 };
 
 
