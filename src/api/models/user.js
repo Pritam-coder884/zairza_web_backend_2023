@@ -38,10 +38,10 @@ const UserSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Event'
     }],
-    image_path : {
-        type : String,
-        required : true
-    }
+    // image_path : {
+    //     type : String,
+    //     required : true
+    // }
 },{
     strict: true,
     timestamps: true,
