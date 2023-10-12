@@ -87,7 +87,7 @@ const getAllUser = async (req, res, next) => {
 const getUser = async (req,res,next) => {
   try {
     const getUser = await User.findOne({email : req.auth.email});
-    await getUser.populate('events', 'event_name event_description event_date event_venue')
+    await getUser.populate('events', 'event_name event_description event_date event_venue event_type')
     res.status(200).send(getUser)
   } catch (error) {
     next(error)

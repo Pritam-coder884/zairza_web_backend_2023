@@ -20,6 +20,11 @@ const eventSchema = new mongoose.Schema({
     event_venue : {
         type : String,
         required : true
+    },
+    event_type : {
+        required : true,
+        type : String,
+        enum : ["Tech Events", "Fun Events", "Workshops"]
     }
 },{
     strict : true,
