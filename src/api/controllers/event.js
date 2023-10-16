@@ -62,4 +62,24 @@ const enrollEvent = async (req,res,next) => {
     }
 }
 
-module.exports = {createEvent, getEvents, enrollEvent}
+const getParticipants = async (req,res,next) => {
+    try {
+        const event = await Event.findOne({event_name : req.body.event_name})
+        if(!event){
+            return res.status(404).send('No such event found')
+        }
+        await event.populate({path : 'users', select : 'name regdno email zencode'})
+        const events = event.users.map((e) => {
+            return {
+                name : e.name,
+                email : e.email,
+                zencode : e.zencode,
+            }
+        })
+        res.status(200).send({events})
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports = {createEvent, getEvents, enrollEvent , getParticipants}
